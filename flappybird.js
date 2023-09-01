@@ -13,6 +13,7 @@ let birdHeight = 24;
 //starting position for bird 
 let birdX = boardWidth/8;
 let birdY = boardHeight/2;
+let birdImg;
 
 let bird = {
     x : birdX,
@@ -29,5 +30,19 @@ window.onload = function() {
     board.width = boardWidth;
     //used for drawing on the board
     context = board.getContext('2d'); 
+ 
+    //draw flappy bird hit box
+    //context.fillStyle = 'green';
+    //context.fillRect(bird.x, bird.y, bird.width, bird.height);
+
+    //load images
+    birdImg = new Image();
+    birdImg.src = "./flappybird.png";
+    birdImg.onload = function() {
+        context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+    }
 }
 
+function updated() {
+    
+}
