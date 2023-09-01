@@ -22,6 +22,21 @@ let bird = {
     height : birdHeight
 }
 
+//pipes
+//Store all the pipes in the game
+let pipeArray = [];
+let pipeWidth = 64; //width/height ratio = 384/3072 = 1/8
+let pipeHeight = 512;
+//Start pipe in top right corner
+let pipeX = boardWidth;
+let pipeY = 0;
+
+let topPipeImg;
+let bottomPipeImg;
+
+//physics
+//Pipes moving left speed
+let velocityX = -1; 
 
 window.onload = function() {
     //getting element id from html canvas id
@@ -31,9 +46,10 @@ window.onload = function() {
     //used for drawing on the board
     context = board.getContext('2d'); 
  
-    //draw flappy bird hit box
-    //context.fillStyle = 'green';
-    //context.fillRect(bird.x, bird.y, bird.width, bird.height);
+    /*  draw flappy bird hit box
+        context.fillStyle = 'green';
+        context.fillRect(bird.x, bird.y, bird.width, bird.height);
+    */
 
     //load images
     birdImg = new Image();
@@ -41,8 +57,49 @@ window.onload = function() {
     birdImg.onload = function() {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
+
+    topPipeImg = new Image();
+    topPipeImg.src = "./toppipe.png";
+    bottomPipeImg = new Image();
+    bottomPipeImg.src = "./bottompipe.png";
+
+    requestAnimationFrame(update);
+    //Place the pipes every 1.5 seconds (1500 milliseconds)
+    setInterval(placePipes, 1500);
 }
 
-function updated() {
-    
+function update() {
+    requestAnimationFrame(update);
+    //Clear frame after each frame
+    context.clearRect(0, 0, board.width, board.height);
+
+    //bird
+    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+
+    //pipes
+    for (let i = 0; i < pipeArray.length; i++) {
+        let pipe = pipeArray[i];
+        //update pipe x position before its drawn every time
+        pipe.x += velocityX; //shifting x position from each pipe 2 px to the let
+        context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+    }
+}
+
+
+function placePipes() {
+
+    let randomPipeY = pipeY - pipeHeight/4 - Math.random()*(pipeHeight/2);
+
+    let topPipe = {
+        img: topPipeImg,
+        x : pipeX,
+        y : randomPipeY,
+        width : pipeWidth,
+        height : pipeHeight,
+        //Check if flappy passed pipe
+        passed : false
+    }
+    //Place first pipe in the array
+    //Will add a new pipe to the array every 1.5 seconds due to line 64
+    pipeArray.push(topPipe);
 }
