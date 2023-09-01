@@ -93,6 +93,8 @@ function placePipes() {
     1 -> -128 - 256 (pipeHeight/4 - pipeHeight/2) = -3/4 pipeHeight
     */
     let randomPipeY = pipeY - pipeHeight/4 - Math.random()*(pipeHeight/2);
+    //Make opening space enough room for bird to travel through
+    let openingSpace = board.height/4;
 
     let topPipe = {
         img: topPipeImg,
@@ -106,4 +108,16 @@ function placePipes() {
     //Place first pipe in the array
     //Will add a new pipe to the array every 1.5 seconds due to line 64
     pipeArray.push(topPipe);
+
+    let bottomPipe = {
+        img : bottomPipeImg,
+        x : pipeX,
+        //Make y the distance from the top to the bottom of opening space to get top of the bottom pipe
+        y : randomPipeY + pipeHeight + openingSpace,
+        width : pipeWidth,
+        height : pipeHeight,
+        passed : false
+    }
+    pipeArray.push(bottomPipe);
+
 }
