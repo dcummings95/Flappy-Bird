@@ -37,7 +37,7 @@ let bottomPipeImg;
 //physics
 let velocityX = -2; //Pipes moving left speed
 let velocityY = 0; //Bird jump speed
-let gravity = 0.09; //Create gravity to keep bird from flying forever upwards
+let gravity = 0.075; //Create gravity to keep bird from flying forever upwards
 
 let gameOver = false;
 let score = 0;
@@ -101,7 +101,7 @@ function update() {
 
         //add to score
         if (!pipe.passed && bird.x > pipe.x + pipe.width) {
-            score += 1;
+            score += 0.5; //0.5 because there are 2 pipes, top and bottom
             pipe.passed = true;
         }
 
@@ -109,7 +109,7 @@ function update() {
             gameOver = true;
         }
     }
-
+   
     //score 
     context.fillStyle = "white";
     context.font = "45px sans-serif";
