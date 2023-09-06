@@ -35,7 +35,7 @@ let topPipeImg;
 let bottomPipeImg;
 
 //physics
-let velocityX = -1.15; //Pipes moving left speed
+let velocityX = -1; //Pipes moving left speed
 let velocityY = 0; //Bird jump speed
 let gravity = 0.075; //Create gravity to keep bird from flying forever upwards
 
