@@ -37,7 +37,7 @@ let bottomPipeImg;
 //physics
 let velocityX = -2; //Pipes moving left speed
 let velocityY = 0; //Bird jump speed
-let gravity = 0.4; //Create gravity to keep bird from flying forever upwards
+let gravity = 0.09; //Create gravity to keep bird from flying forever upwards
 
 window.onload = function() {
     //getting element id from html canvas id
@@ -77,7 +77,9 @@ function update() {
     context.clearRect(0, 0, board.width, board.height);
 
     //bird
-    bird.y += velocityY;
+    velocityY += gravity;
+    //bird.y += velocityY;
+    bird.y = Math.max(bird.y + velocityY, 0); //apply gravity to current bird.y and make sure it doesnt pass top of canvas
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     //pipes
@@ -129,6 +131,10 @@ function placePipes() {
 function moveBird(e){
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
         //jump
-        velocityY = -6;
+        velocityY = -3;
     }
+}
+
+function detectCollision(a, b){
+    
 }
