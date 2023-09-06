@@ -120,6 +120,10 @@ function update() {
     context.font = "45px sans-serif";
     context.fillText(score, 5, 45);
 
+    //adds game over into the top left
+    if (gameOver) {
+        context.fillText("GAME OVER", 5, 90);
+    }
 }
 
 
@@ -166,6 +170,14 @@ function moveBird(e){
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
         //jump
         velocityY = -2.5;
+
+        //reset game so reset variables
+        if (gameOver) {
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
     }
 }
 
