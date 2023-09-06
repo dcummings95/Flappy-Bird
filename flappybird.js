@@ -35,8 +35,9 @@ let topPipeImg;
 let bottomPipeImg;
 
 //physics
-//Pipes moving left speed
-let velocityX = -1; 
+let velocityX = -2; //Pipes moving left speed
+let velocityY = 0; //Bird jump speed
+let gravity = 0.4; //Create gravity to keep bird from flying forever upwards
 
 window.onload = function() {
     //getting element id from html canvas id
@@ -66,6 +67,8 @@ window.onload = function() {
     requestAnimationFrame(update);
     //Place the pipes every 1.5 seconds (1500 milliseconds)
     setInterval(placePipes, 1500);
+    //every time you tap on a key its going to call moveBird function
+    document.addEventListener("keydown", moveBird);
 }
 
 function update() {
@@ -74,6 +77,7 @@ function update() {
     context.clearRect(0, 0, board.width, board.height);
 
     //bird
+    bird.y += velocityY;
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     //pipes
@@ -120,4 +124,11 @@ function placePipes() {
     }
     pipeArray.push(bottomPipe);
 
+}
+//param e is the key event
+function moveBird(e){
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
+        //jump
+        velocityY = -6;
+    }
 }
