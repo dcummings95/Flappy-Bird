@@ -40,7 +40,7 @@ let velocityY = 0; //Bird jump speed
 let gravity = 0.09; //Create gravity to keep bird from flying forever upwards
 
 let gameOver = false;
-
+let score = 0;
 
 window.onload = function() {
     //getting element id from html canvas id
@@ -88,6 +88,10 @@ function update() {
     bird.y = Math.max(bird.y + velocityY, 0); //apply gravity to current bird.y and make sure it doesnt pass top of canvas
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
+    if (bird.y > board.height) { 
+        gameOver = true;
+    }
+
     //pipes
     for (let i = 0; i < pipeArray.length; i++) {
         let pipe = pipeArray[i];
@@ -95,10 +99,22 @@ function update() {
         pipe.x += velocityX; //shifting x position from each pipe 2 px to the let
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
 
+        //add to score
+        if (!pipe.passed && bird.x > pipe.x + pipe.width) {
+            score += 1;
+            pipe.passed = true;
+        }
+
         if (detectCollision(bird, pipe)) { 
             gameOver = true;
         }
     }
+
+    //score 
+    context.fillStyle = "white";
+    context.font = "45px sans-serif";
+    context.fillText(score, 5, 45);
+
 }
 
 
