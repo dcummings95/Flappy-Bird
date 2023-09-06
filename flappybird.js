@@ -35,7 +35,7 @@ let topPipeImg;
 let bottomPipeImg;
 
 //physics
-let velocityX = -2; //Pipes moving left speed
+let velocityX = -1.15; //Pipes moving left speed
 let velocityY = 0; //Bird jump speed
 let gravity = 0.075; //Create gravity to keep bird from flying forever upwards
 
@@ -109,7 +109,12 @@ function update() {
             gameOver = true;
         }
     }
-   
+
+    //clear pipes
+    while (pipeArray.length > 0 && pipeArray[0].x < -pipeWidth){
+        pipeArray.shift(); //removes first element from the array
+    }
+
     //score 
     context.fillStyle = "white";
     context.font = "45px sans-serif";
@@ -160,7 +165,7 @@ function placePipes() {
 function moveBird(e){
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
         //jump
-        velocityY = -3;
+        velocityY = -2.5;
     }
 }
 
